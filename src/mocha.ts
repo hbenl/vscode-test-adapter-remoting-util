@@ -10,6 +10,7 @@ export interface WorkerArgs {
 	mochaPath: string;
 	mochaOpts: MochaOpts;
 	monkeyPatch?: boolean;
+	debuggerPort?: number;
 	ipcPort?: number;
 	ipcHost?: string;
 	ipcRole?: 'client' | 'server';
