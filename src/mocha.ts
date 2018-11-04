@@ -1,5 +1,5 @@
 import * as net from 'net';
-import { TestSuiteEvent, TestEvent, TestSuiteInfo } from 'vscode-test-adapter-api';
+import { TestSuiteEvent, TestEvent, TestSuiteInfo, TestInfo } from 'vscode-test-adapter-api';
 import { convertInfo } from './common';
 import { readMessages } from './ipc';
 
@@ -57,22 +57,24 @@ export function convertTestLoadMessage(
 export function convertTestRunMessage(
 	msg: string | TestSuiteEvent | TestEvent,
 	convertPath: (path: string) => string
-): void {
+): string | TestSuiteEvent | TestEvent {
 
 	if (typeof msg === 'string') {
-		return;
+		return msg;
 	}
 
 	if (msg.type === 'suite') {
 
 		if (typeof msg.suite === 'object') {
-			convertInfo(msg.suite, convertPath);
+			return { ...msg, suite: <TestSuiteInfo>convertInfo(msg.suite, convertPath) };
 		}
 
 	} else if (msg.type === 'test') {
 
 		if (typeof msg.test === 'object') {
-			convertInfo(msg.test, convertPath);
+			return { ...msg, test: <TestInfo>convertInfo(msg.test, convertPath) };
 		}
 	}
+
+	return msg;
 }
