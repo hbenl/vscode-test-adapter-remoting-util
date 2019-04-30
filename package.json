@@ -20,13 +20,13 @@
   "main": "out/index.js",
   "types": "out/index.d.ts",
   "dependencies": {
-    "split2": "^3.0.0",
+    "split": "^1.0.1",
     "tslib": "^1.9.3",
     "vscode-test-adapter-api": "^1.1.0"
   },
   "devDependencies": {
     "@types/node": "^8.10.20",
-    "@types/split2": "^2.1.6",
+    "@types/split": "^1.0.0",
     "typescript": "^3.1.6"
   }
 }

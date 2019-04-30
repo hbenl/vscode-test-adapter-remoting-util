@@ -1,5 +1,5 @@
 import * as net from 'net';
-import * as split2 from 'split2';
+import split from 'split';
 
 export interface ILog {
 	debug(msg: string): void;
@@ -139,7 +139,7 @@ export function writeMessage(socket: net.Socket, msg: any): void {
 }
 
 export function readMessages<T>(socket: net.Socket, handler: (msg: T) => void): void {
-	socket.pipe(split2()).on('data', (data: string) => {
+	socket.pipe(split()).on('data', (data: string) => {
 		handler(JSON.parse(data));
 	});
 }
