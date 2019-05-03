@@ -140,7 +140,9 @@ export function writeMessage(socket: net.Socket, msg: any): void {
 
 export function readMessages<T>(socket: net.Socket, handler: (msg: T) => void): void {
 	socket.pipe(split()).on('data', (data: string) => {
-		handler(JSON.parse(data));
+		if (data) {
+			handler(JSON.parse(data));
+		}
 	});
 }
 
