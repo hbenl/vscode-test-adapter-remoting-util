@@ -134,8 +134,8 @@ export function receiveConnection(
 	});
 }
 
-export function writeMessage(socket: net.Socket, msg: any): void {
-	socket.write(JSON.stringify(msg) + '\n');
+export function writeMessage(socket: net.Socket, msg: any): Promise<void> {
+	return new Promise<void>(resolve => socket.write(JSON.stringify(msg) + '\n', resolve));
 }
 
 export function readMessages<T>(socket: net.Socket, handler: (msg: T) => void): void {
