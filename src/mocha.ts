@@ -3,19 +3,19 @@ import { TestSuiteEvent, TestEvent, TestSuiteInfo, TestInfo } from 'vscode-test-
 import { convertInfo } from './common';
 import { readMessages } from './ipc';
 
+export type EnvVars = { [envVar: string]: string | null };
+
 export interface WorkerArgs {
 	action: 'loadTests' | 'runTests';
 	testFiles: string[];
 	tests?: string[];
+	env: EnvVars;
 	mochaPath: string;
 	mochaOpts: MochaOpts;
 	monkeyPatch?: boolean;
-	debuggerPort?: number;
-	ipcPort?: number;
-	ipcHost?: string;
-	ipcRole?: 'client' | 'server';
-	workerPath?: string;
 	logEnabled: boolean;
+	workerScript?: string;
+	debuggerPort?: number;
 }
 
 export interface MochaOpts {
@@ -31,8 +31,18 @@ export interface ErrorInfo {
 	errorMessage: string;
 }
 
+export interface NetworkOptions {
+	role: 'client' | 'server';
+	port: number;
+	host?: string;
+}
+
 export function convertWorkerArgs(workerArgs: WorkerArgs, convertPath: (path: string) => string): WorkerArgs {
-	return { ...workerArgs, testFiles: workerArgs.testFiles.map(convertPath) };
+	return { 
+		...workerArgs,
+		testFiles: workerArgs.testFiles.map(convertPath),
+		mochaPath: convertPath(workerArgs.mochaPath)
+	};
 }
 
 export function receiveTestLoadMessages(socket: net.Socket, handler: (msg: string | TestSuiteInfo | ErrorInfo | null) => void): void {
