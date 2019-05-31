@@ -22,11 +22,11 @@
   "dependencies": {
     "split": "^1.0.1",
     "tslib": "^1.9.3",
-    "vscode-test-adapter-api": "^1.1.0"
+    "vscode-test-adapter-api": "^1.7.0"
   },
   "devDependencies": {
-    "@types/node": "^8.10.20",
+    "@types/node": "^10.14.8",
     "@types/split": "^1.0.0",
-    "typescript": "^3.1.6"
+    "typescript": "^3.5.1"
   }
 }
