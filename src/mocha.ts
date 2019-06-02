@@ -39,7 +39,7 @@ export interface WorkerArgs {
 	workerScript?: string;
 
 	/** if the tests should be run in the debugger, this contains the port that the debugger should
-	 * use. Otherwise it is unspecified. */
+	 * use. Otherwise it is undefined. */
 	debuggerPort?: number;
 }
 

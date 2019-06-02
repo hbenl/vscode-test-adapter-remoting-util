@@ -29,12 +29,15 @@ object sent by Mocha Test Explorer.
 It contains all the necessary information about what the worker script should do.
 
 All subsequent messages are sent by the worker script. They contain the worker's results:
-* if the worker loads the tests, it will send a [`TestSuiteInfo`]() object containing all suites
-  and tests, `null` if no tests could be found or an 
+* if the worker loads the tests, it will send a
+  [`TestSuiteInfo`](https://github.com/hbenl/vscode-test-adapter-api/blob/master/src/index.ts#L172)
+  object containing all suites and tests, `null` if no tests could be found or an 
   [`ErrorInfo`](https://github.com/hbenl/vscode-test-adapter-remoting-util/blob/master/src/mocha.ts#L11)
   object if the worker encountered an error that should be shown in the UI.
-* if the worker runs the tests, it will send [`TestSuiteEvent`]() and [`TestEvent`]() objects for
-  the suites and tests that were started or finished.
+* if the worker runs the tests, it will send 
+  [`TestSuiteEvent`](https://github.com/hbenl/vscode-test-adapter-api/blob/master/src/index.ts#L235) and
+  [`TestEvent`](https://github.com/hbenl/vscode-test-adapter-api/blob/master/src/index.ts#L264)
+  objects for the suites and tests that were started or finished.
 * in both cases the worker can also send `string`s in between these messages - these will be added
   to Mocha Test Explorer's diagnostic log (if it is enabled).
 
@@ -88,6 +91,6 @@ to the worker.
 
 The worker protocol messages are JSON-encoded and separated by a newline character. This
 package also contains the
-[`writeMessage()`](https://github.com/hbenl/vscode-test-adapter-remoting-util/blob/master/src/ipc.ts#181) and
-[`readMessages()`](https://github.com/hbenl/vscode-test-adapter-remoting-util/blob/master/src/ipc.ts#189)
+[`writeMessage()`](https://github.com/hbenl/vscode-test-adapter-remoting-util/blob/master/src/ipc.ts#L181) and
+[`readMessages()`](https://github.com/hbenl/vscode-test-adapter-remoting-util/blob/master/src/ipc.ts#L189)
 functions that take care of this encoding.
