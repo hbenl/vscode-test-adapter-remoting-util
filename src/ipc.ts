@@ -1,6 +1,9 @@
 import * as net from 'net';
 import split from 'split';
 
+/**
+ * Loggers implementing this interface can be passed to `createConnection` and `receiveConnection`
+ */
 export interface ILog {
 	debug(msg: string): void;
 	info(msg: string): void;
@@ -8,13 +11,37 @@ export interface ILog {
 	error(msg: string): void;
 }
 
+/**
+ * Connect to the given port and return the socket if successful.
+ * If the connection is rejected, this function will keep retrying every `retryInterval` milliseconds
+ * until `timeout` milliseconds have passed, then it will reject the returned Promise.
+ * If a connection is established, this function will wait for `rejectClosedSocket` milliseconds and
+ * if the connection is closed during that time, it will retry connecting. This is sometimes necessary
+ * if you connect through a TCP proxy (which is the case if you connect to exposed ports of a docker
+ * container or through an ssh tunnel): the proxy may accept the connection and then immediately close
+ * it again if it can't establish a connection to its target port.
+ */
 export function createConnection(
+
+	/** the port to connect to */
 	port: number,
+
 	opts?: {
+
+		/** the host to connect to, the default is localhost */
 		host?: string,
+
+		/** the amount of time (in milliseconds) to retry before giving up */
 		timeout?: number,
+
+		/** the amount of time (in milliseconds) to sleep before retrying */
 		retryInterval?: number,
+
+		/** the amount of time (in milliseconds) to wait after connecting to see if the
+		 * connection is closed again. The default is 10, set this to 0 to disable
+		 * this mechanism. */
 		rejectClosedSocket?: number,
+
 		log?: ILog
 	}
 ): Promise<net.Socket> {
@@ -57,7 +84,7 @@ export function createConnection(
 
 				resolve(socket);
 			}
-		
+
 			function onError(err: Error) {
 
 				if (log) log.info(`IPC client failed to connect to server: ${err}`);
@@ -66,7 +93,7 @@ export function createConnection(
 
 				reject(err);
 			}
-		
+
 			const socket = net.createConnection(port, host);
 
 			socket.once('connect', onConnect);
@@ -75,11 +102,25 @@ export function createConnection(
 	}
 }
 
+/**
+ * Wait for a connection on the given port and return the socket if successful.
+ * This function will wait for a connection for `timeout` milliseconds and reject the returned
+ * Promise if no connection is received within that time. If a connection is received, this
+ * function will close the TCP server, i.e. it will not accept more than one connection.
+ */
 export function receiveConnection(
+
+	/** the port to listen on */
 	port: number,
+
 	opts?: {
+
+		/** the address to listen on (this is the second argument to [`server.listen()`]() */
 		host?: string,
+
+		/** the amount of time (in milliseconds) to wait for a connection before giving up */
 		timeout?: number,
+
 		log?: ILog
 	}
 ): Promise<net.Socket> {
@@ -101,7 +142,7 @@ export function receiveConnection(
 					log.info('IPC server received disconnect from client');
 				});
 			}
-	
+
 			// only one connection should be accepted, so we're closing the server now
 			// (this won't close the connection that was just established)
 			server.close();
@@ -134,10 +175,17 @@ export function receiveConnection(
 	});
 }
 
+/**
+ * Send a message via the given `socket`. The given message is JSON-encoded and a newline character appended
+ */
 export function writeMessage(socket: net.Socket, msg: any): Promise<void> {
 	return new Promise<void>(resolve => socket.write(JSON.stringify(msg) + '\n', resolve));
 }
 
+/**
+ * Receive messages on the given socket. The data from the socket is split into lines and each line
+ * is parsed using `JSON.parse()`
+ */
 export function readMessages<T>(socket: net.Socket, handler: (msg: T) => void): void {
 	socket.pipe(split()).on('data', (data: string) => {
 		if (data) {
