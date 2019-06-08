@@ -1,7 +1,7 @@
 # Mocha Test Explorer remoting utility functions
 
-This package contains utility functions for running tests remotely with the 
-[Mocha Test Explorer](https://github.com/hbenl/vscode-mocha-test-adapter).
+This package contains utility functions for running tests remotely with
+[Mocha Test Explorer](https://marketplace.visualstudio.com/items?itemName=hbenl.vscode-mocha-test-adapter).
 
 ## Running tests remotely
 
@@ -32,7 +32,7 @@ All subsequent messages are sent by the worker script. They contain the worker's
 * if the worker loads the tests, it will send a
   [`TestSuiteInfo`](https://github.com/hbenl/vscode-test-adapter-api/blob/master/src/index.ts#L172)
   object containing all suites and tests, `null` if no tests could be found or an 
-  [`ErrorInfo`](https://github.com/hbenl/vscode-test-adapter-remoting-util/blob/master/src/mocha.ts#L11)
+  [`ErrorInfo`](https://github.com/hbenl/vscode-test-adapter-remoting-util/blob/master/src/mocha.ts#L61)
   object if the worker encountered an error that should be shown in the UI.
 * if the worker runs the tests, it will send 
   [`TestSuiteEvent`](https://github.com/hbenl/vscode-test-adapter-api/blob/master/src/index.ts#L235) and
