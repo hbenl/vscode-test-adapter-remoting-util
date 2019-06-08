@@ -52,7 +52,10 @@ In order to load or run the tests in a remote environment, the launcher script n
 * deploy mocha in the remote environment. If your workspace folder contains mocha in
   `node_modules/mocha` and you have deployed the entire workspace folder in the remote environment,
   you can use that copy of mocha by setting `"mochaExplorer.mochaPath": "node_modules/mocha"`
-  in your VS Code settings.
+  in your VS Code settings. Alternatively, you could deploy mocha to some other location in the
+  remote environment and set the `mochaPath` property in the `WorkerArgs` to that location.
+  Or you could let node resolve the mocha location in the remote environment (using node's standard
+  resolution algorithm) by setting `mochaPath` in the `WorkerArgs` to `undefined`.
 * send the worker script to the remote environment. This could also be done using bind-mount or
   `rsync` or it could be sent via `stdin` to the node process in the remote environment.
 * start the worker script remotely. This is usually done by 
