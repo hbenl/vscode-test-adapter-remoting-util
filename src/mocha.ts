@@ -13,6 +13,9 @@ export interface WorkerArgs {
 	/** what the worker should do */
 	action: 'loadTests' | 'runTests';
 
+	/** the working directory */
+	cwd: string;
+
 	/** the absolute paths of all files containing tests */
 	testFiles: string[];
 
@@ -89,6 +92,7 @@ export interface NetworkOptions {
 export function convertWorkerArgs(workerArgs: WorkerArgs, convertPath: (path: string) => string): WorkerArgs {
 	return { 
 		...workerArgs,
+		cwd: convertPath(workerArgs.cwd),
 		testFiles: workerArgs.testFiles.map(convertPath),
 		mochaPath: workerArgs.mochaPath ? convertPath(workerArgs.mochaPath) : undefined
 	};
