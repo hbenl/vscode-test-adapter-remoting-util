@@ -23,7 +23,7 @@ export interface WorkerArgs {
 	env: EnvVars;
 
 	/** the absolute path to the mocha _package_ */
-	mochaPath: string;
+	mochaPath?: string;
 
 	/** options to be passed to mocha */
 	mochaOpts: MochaOpts;
@@ -90,7 +90,7 @@ export function convertWorkerArgs(workerArgs: WorkerArgs, convertPath: (path: st
 	return { 
 		...workerArgs,
 		testFiles: workerArgs.testFiles.map(convertPath),
-		mochaPath: convertPath(workerArgs.mochaPath)
+		mochaPath: workerArgs.mochaPath ? convertPath(workerArgs.mochaPath) : undefined
 	};
 }
 
