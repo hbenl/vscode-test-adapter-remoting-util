@@ -8,16 +8,21 @@ This package contains utility functions for running tests remotely with
 You can let the Mocha Test Explorer run your tests in a remote environment (e.g. in a docker
 container or via ssh on a remote machine) by writing a launcher script.
 Usually, when Mocha Test Explorer loads or runs your tests, it does so by running a worker script
-in a child process and communicating with it using the worker protocol.
+in a child process and communicating with it using the mocha worker protocol (which is a simple
+internal protocol of Mocha Test Explorer).
 If you write a launcher script and set `mochaExplorer.launcherScript` in your VS Code settings to
-the location of that script, Mocha Test Explorer will run your launcher script instead of the
+the location of that script, Mocha Test Explorer will run your launcher script instead of its
 worker script. Your launcher script should then run the worker script in the remote environment
 and forward the worker protocol messages between Mocha Test Explorer and the remotely running
 worker script.
 
-### Details of the worker protocol
+There are example projects containing well-documented launcher scripts for running your tests
+[in a docker container](https://github.com/hbenl/vscode-mocha-docker-example) or
+[on another machine via ssh](https://github.com/hbenl/vscode-mocha-ssh-example).
 
-The worker protocol is a very simple message-based protocol that is closely related to the
+### Details of the mocha worker protocol
+
+The mocha worker protocol is a very simple message-based protocol that is closely related to the
 [Test Adapter API](https://github.com/hbenl/vscode-test-adapter-api). It is usually sent via a
 node IPC channel (using [`process.send(...)`](https://nodejs.org/dist/latest-v10.x/docs/api/child_process.html#child_process_subprocess_send_message_sendhandle_options_callback) and
 [`process.on('message', ...)`](https://nodejs.org/dist/latest-v10.x/docs/api/child_process.html#child_process_event_message))
