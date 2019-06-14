@@ -1,5 +1,5 @@
 import * as net from 'net';
-import { TestSuiteEvent, TestEvent, TestSuiteInfo, TestInfo } from 'vscode-test-adapter-api';
+import { TestSuiteEvent, TestEvent, TestSuiteInfo, TestInfo, TestRunFinishedEvent } from 'vscode-test-adapter-api';
 import { convertInfo } from './common';
 import { readMessages } from './ipc';
 
@@ -131,9 +131,9 @@ export function convertTestLoadMessage(
  * Convert all paths in worker protocol messages when running the tests using the given `convertPath` function
  */
 export function convertTestRunMessage(
-	msg: string | TestSuiteEvent | TestEvent,
+	msg: string | TestSuiteEvent | TestEvent | TestRunFinishedEvent,
 	convertPath: (path: string) => string
-): string | TestSuiteEvent | TestEvent {
+): string | TestSuiteEvent | TestEvent | TestRunFinishedEvent {
 
 	if (typeof msg === 'string') {
 		return msg;

@@ -42,7 +42,9 @@ All subsequent messages are sent by the worker script. They contain the worker's
 * if the worker runs the tests, it will send 
   [`TestSuiteEvent`](https://github.com/hbenl/vscode-test-adapter-api/blob/master/src/index.ts#L235) and
   [`TestEvent`](https://github.com/hbenl/vscode-test-adapter-api/blob/master/src/index.ts#L264)
-  objects for the suites and tests that were started or finished.
+  objects for the suites and tests that were started or finished and a
+  [`TestRunFinishedEvent`](https://github.com/hbenl/vscode-test-adapter-api/blob/master/src/index.ts#L165)
+  when the test run has finished.
 * in both cases the worker can also send `string`s in between these messages - these will be added
   to Mocha Test Explorer's diagnostic log (if it is enabled).
 
