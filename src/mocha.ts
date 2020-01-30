@@ -54,7 +54,8 @@ export interface MochaOpts {
 	timeout: number,
 	retries: number,
 	requires: string[],
-	exit: boolean
+	exit: boolean,
+	files: string[],
 }
 
 /**
