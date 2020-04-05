@@ -44,6 +44,9 @@ export interface WorkerArgs {
 	/** if the tests should be run in the debugger, this contains the port that the debugger should
 	 * use. Otherwise it is undefined. */
 	debuggerPort?: number;
+
+	/** this flag tells the worker if it should use Mocha's experimental ESM module loader if it is available */
+	esmLoader: boolean;
 }
 
 /**
