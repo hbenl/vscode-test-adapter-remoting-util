@@ -21,12 +21,12 @@
   "types": "out/index.d.ts",
   "dependencies": {
     "split": "^1.0.1",
-    "tslib": "^1.11.1",
-    "vscode-test-adapter-api": "^1.8.0"
+    "tslib": "^2.0.0",
+    "vscode-test-adapter-api": "^1.9.0"
   },
   "devDependencies": {
-    "@types/node": "^10.17.18",
+    "@types/node": "^10.17.24",
     "@types/split": "^1.0.0",
-    "typescript": "^3.8.3"
+    "typescript": "^3.9.3"
   }
 }
