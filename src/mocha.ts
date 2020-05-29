@@ -57,6 +57,7 @@ export interface MochaOpts {
 	timeout: number,
 	retries: number,
 	requires: string[],
+	delay: boolean,
 	fullTrace: boolean,
 	exit: boolean
 }
