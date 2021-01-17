@@ -59,7 +59,10 @@ export interface MochaOpts {
 	requires: string[],
 	delay: boolean,
 	fullTrace: boolean,
-	exit: boolean
+	exit: boolean,
+	asyncOnly: boolean,
+	parallel: boolean,
+	jobs?: number;
 }
 
 /**
