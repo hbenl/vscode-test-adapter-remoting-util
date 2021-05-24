@@ -35,6 +35,10 @@ export interface WorkerArgs {
 	 * to mocha that is necessary to detect the source locations of dynamically generated tests. */
 	monkeyPatch?: boolean;
 
+	/** Ignore Mocha's idea of which file a test is located in. This is necessary for the monkey patch
+	 * to find the correct test locations when a suite includes tests from other files. */
+	multiFileSuites?: boolean;
+
 	/** this flag tells the worker if the diagnostic log is enabled */
 	logEnabled: boolean;
 
